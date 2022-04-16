@@ -65,37 +65,41 @@ class Producto {
 
 }
 
-class Buzo extends Producto{
+// class Buzo extends Producto{
     
-    constructor(nombre,precio,descripcion,colorPrincipal,talle){
-        super(nombre,precio,descripcion);
-        if(this.esColorPrincipalValido(colorPrincipal)){
-            this.colorPrincipal = colorPrincipal;
-        }
-        if(this.esTalleValido(talle)){
-            this.talle = talle.toUpperCase();
-        }
-    }
+//     constructor(nombre,precio,descripcion,colorPrincipal,talle){
+//         super(nombre,precio,descripcion);
+//         if(this.esColorPrincipalValido(colorPrincipal)){
+//             this.colorPrincipal = colorPrincipal;
+//         }
+//         if(this.esTalleValido(talle)){
+//             this.talle = talle.toUpperCase();
+//         }
+//     }
     
-    toString () {
-        return `Buzo ${this.nombre} ($${this.precio}) cuyo color principal es ${this.colorPrincipal}`;
-    }
+//     toString () {
+//         return `Buzo ${this.nombre} ($${this.precio}) cuyo color principal es ${this.colorPrincipal}`;
+//     }
     
-    esColorPrincipalValido(color){
-        const coloresPermitidos = ["Rojo","Negro","Azul","Blanco","Verde","Amarillo","Marron","Gris"];
-        return coloresPermitidos.includes(color);
-    }
+//     esColorPrincipalValido(color){
+//         const coloresPermitidos = ["Rojo","Negro","Azul","Blanco","Verde","Amarillo","Marron","Gris"];
+//         return coloresPermitidos.includes(color);
+//     }
     
-    esTalleValido(talle){
-        const tallesPermitidos = ["S","M","L","XL","XXL"];
-        return tallesPermitidos.includes(talle.toUpperCase());
-    }
+//     esTalleValido(talle){
+//         const tallesPermitidos = ["S","M","L","XL","XXL"];
+//         return tallesPermitidos.includes(talle.toUpperCase());
+//     }
     
-}
+// }
 
 class Remera extends Producto{
     
     static coloresPermitidosRemeras = ["Rojo","Negro","Azul","Blanco","Verde","Amarillo","Marron","Gris"];
+    static pesoProductoKg = 0.320;
+    static longitudCajaCms = 22;
+    static anchoCajaCms = 30;
+    static altoCajaCms = 2;
 
     constructor(id,codigo,seccion,nombre,precio,descripcion,colorPrincipal,tags,imagenPrincipal,imagenesSecundarias){
         super(id,codigo,seccion,nombre,precio,descripcion,tags);
@@ -113,10 +117,14 @@ class Remera extends Producto{
     }
 
     getArrayImagenesEstampa(){
-        let tempArray = new Array();
+        let tempArray = [this.codigo+this.getTipoDeProductoPrefijo()+"_"+this.colorPrincipal.toLowerCase()+"_estampa.jpg"];
+
         Remera.coloresPermitidosRemeras.forEach(color => {
-            // tempArray.push()
+            // color != this.colorPrincipal ? tempArray.push(color.toLowerCase()) : null;
+            color != this.colorPrincipal ? tempArray.push(this.codigo+this.getTipoDeProductoPrefijo()+"_"+color.toLowerCase()+"_estampa.jpg") : null;
         })
+
+        return tempArray;
     }
 
     getArrayImagenes() {
@@ -170,11 +178,24 @@ class Remera extends Producto{
     }
 
     getLineaCsv (){
+        let separador = "|"
         let descripcionWooCommerce = "\"[block id=\"\"descripcion-remera\"\"]\"";
         let categoriaWooCommerce= "Remeras 100% Velvet Cotton|";
         let direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/";
+        
+        let imagenesEstampaArray = this.getArrayImagenesEstampa();
+        imagenesEstampaArray.splice(0,1);
+        let imagenes = [this.imagenPrincipal,this.getArrayImagenesEstampa()[0],...this.getArrayImagenesSecundarias(),...imagenesEstampaArray];
 
-        return `${this.id};${this.getTipoDeProductoPrefijo()};${this.getTipoDeProductoPrefijo() + this.codigo};${this.nombre};${descripcionWooCommerce};${this.descripcion};${categoriaWooCommerce+this.seccion};${this.precio};`;
+        let imagenesConcat = "";
+        let i = 0;
+        console.log(imagenesEstampaArray);
+        imagenes.forEach(elemento => {         
+            (i == 0) ? imagenesConcat += direccionImgWooCommerce+elemento : imagenesConcat += separador+direccionImgWooCommerce+elemento;
+            i++;
+        })
+
+        return `${this.id};${this.getTipoDeProductoPrefijo()};${this.getTipoDeProductoPrefijo() + this.codigo};${this.nombre};${descripcionWooCommerce};${this.descripcion};${categoriaWooCommerce+this.seccion};${this.precio};${imagenesConcat};${this.tags};${Remera.pesoProductoKg};${Remera.longitudCajaCms};${Remera.anchoCajaCms};${Remera.altoCajaCms}`;
     }
 
 }
@@ -247,3 +268,5 @@ class ExportRemeras {
     // console.log(ExportRemeras.createExportTable($arrayProductos,"http://qualityserver.ddns.net:50001/img_tienda/ftp_re/"));
 
     console.log($arrayProductos[0].getLineaCsv());
+    console.log($arrayProductos[0].getArrayImagenesEstampa());
+    console.log($arrayProductos[0].getArrayImagenes());
