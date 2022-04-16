@@ -1,0 +1,15 @@
+{
+  "name": "dashboard_quality",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "sass": "^1.49.11"
+  },
+  "scripts": {
+    "sass":"sass --watch --style expanded scss/main.scss css/styles.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

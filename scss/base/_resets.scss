@@ -1,0 +1,20 @@
+@use '../abstracts/variables' as v;
+
+html {
+    font-size: v.$defaultFontSize;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box!important;
+    font-family: v.$defaultFont;
+}
+
+ul {
+    list-style:none;
+}
+
+li {
+    display: inline-block;
+}

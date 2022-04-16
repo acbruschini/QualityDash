@@ -1,0 +1,176 @@
+@use "../abstracts/variables.scss" as v;
+
+.mainContainer {
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
+    "navbar main"
+    "footer footer";
+    grid-template-columns: v.$mainContainerWidth auto;
+    grid-template-rows: calc(100vh - 4rem) 4rem;
+}
+
+.navbar {
+    grid-area: navbar;
+    background-color: map-get(v.$mainColors, gray7);
+    background-image: url("../img/navbar_pattern.svg");
+    
+    &-branding{
+        padding-top: v.$generalPadding;
+        display: flex;
+        justify-content: center;
+        padding-bottom: v.$generalPadding;
+        & > img {
+            max-width: 5rem;
+            filter: invert(83%) sepia(81%) saturate(24%) hue-rotate(135deg) brightness(113%) contrast(70%);
+        }
+    }
+
+    &-sections{
+        padding: v.$generalPadding;
+        & > h2 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: map-get(v.$mainColors, gray5);
+        }
+
+        & > ul {
+            display: flex;
+            flex-direction: column;
+            padding-left: 2rem;
+
+            & > li {
+                font-size: 1.3rem;
+                margin-bottom: 0.7rem;
+                color: map-get(v.$mainColors, gray3);
+                text-transform: uppercase;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        
+    }
+
+    &-separator {
+        height: 0.2rem;
+        background-color: map-get(v.$mainColors, gray6);
+    }
+}
+
+.mainContent {
+    grid-area: main;
+    background-color: map-get(v.$mainColors, gray1);
+    overflow-y: scroll;
+    padding: 1rem;
+
+    &-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: white;
+        border-radius: 1rem;
+        padding: 1rem 3rem 1rem 3rem;
+        margin-bottom: 1rem;
+
+        &-section{
+            font-weight: 600;
+            font-size: 2rem;
+            margin-right: 0.8rem;
+            color: map-get(v.$mainColors, gray3);
+            text-transform: uppercase;
+        }
+
+        &-title{
+            margin-right: auto;
+            font-weight: 600;
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+
+        &-user {
+            display: flex;
+            align-items: center;
+
+            &--img {
+                width: 3rem;
+                border-radius: 50%;
+                margin: 0.5rem;
+            }
+
+            &--username{
+                font-weight: 400;
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    &-main {
+        background-color: white;
+        border-radius: 1rem;
+        padding: 3rem;
+        &-productsTable {
+
+            &-productLine {
+
+                @mixin productLine-Cell($gridArea) {
+                    padding: 1rem;
+                    grid-area: $gridArea;
+                    // border: 0.1rem solid black;
+                }
+                
+                display: grid;
+                // grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px;
+                grid-template-columns: 0.25fr auto 0.25fr 1fr 1fr 0.25fr 1fr 1fr;
+                grid-template-areas: 
+                "id mainImg sku title description price images tags";
+                
+                &--id {
+                    @include productLine-Cell(id);
+                    text-align: center;
+                }
+                &--mainImg {
+                    @include productLine-Cell(mainImg);
+                    &>img {
+                        width: 10rem;
+                    }
+                }
+                &--sku {
+                    @include productLine-Cell(sku);
+                }
+                &--title {
+                    @include productLine-Cell(title);
+                }
+                &--description {
+                    @include productLine-Cell(description);
+                }
+                &--price {
+                    @include productLine-Cell(price);
+                }
+                &--images {
+                    @include productLine-Cell(images);
+                    &>img {
+                        width: 5rem;
+                    }
+                }
+                &--tags {
+                    @include productLine-Cell(tags);
+                }
+            }
+        }
+
+    }
+}
+
+.footer {
+    grid-area: footer;
+    background-color: map-get(v.$mainColors, gray8);
+    display: flex;
+    align-items: center;
+    padding-left: v.$generalPadding;
+    & > h6 {
+        color: map-get(v.$mainColors, gray5);
+        font-size: 1rem;
+    }
+}
