@@ -100,6 +100,7 @@ class Remera extends Producto{
     static longitudCajaCms = 22;
     static anchoCajaCms = 30;
     static altoCajaCms = 2;
+    static direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/";
 
     constructor(id,codigo,seccion,nombre,precio,descripcion,colorPrincipal,tags,imagenPrincipal,imagenesSecundarias){
         super(id,codigo,seccion,nombre,precio,descripcion,tags);
@@ -181,7 +182,7 @@ class Remera extends Producto{
         let separador = "|"
         let descripcionWooCommerce = "\"[block id=\"\"descripcion-remera\"\"]\"";
         let categoriaWooCommerce= "Remeras 100% Velvet Cotton|";
-        let direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/";
+        // let direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/";
         
         let imagenesEstampaArray = this.getArrayImagenesEstampa();
         imagenesEstampaArray.splice(0,1);
@@ -191,7 +192,7 @@ class Remera extends Producto{
         let i = 0;
         console.log(imagenesEstampaArray);
         imagenes.forEach(elemento => {         
-            (i == 0) ? imagenesConcat += direccionImgWooCommerce+elemento : imagenesConcat += separador+direccionImgWooCommerce+elemento;
+            (i == 0) ? imagenesConcat += Remera.direccionImgWooCommerce+elemento : imagenesConcat += separador+Remera.direccionImgWooCommerce+elemento;
             i++;
         })
 
@@ -213,7 +214,7 @@ class ExportRemeras {
     static classNameImages = "images";
     static classNameTags = "tags";
 
-    static createExportTable(arrayRemeras,direccionImg){
+    static createExportTable(arrayRemeras){
         let table = document.createElement("div");
         table.setAttribute("class",this.classNameTable);
 
@@ -221,7 +222,7 @@ class ExportRemeras {
             let line = document.createElement("div");
             line.setAttribute("class",`${this.classNameTable}-${this.classNameLine}`);
 
-            let direccionCompleta = direccionImg + element.getCodigoConTipo() + "/";
+            let direccionCompleta = Remera.direccionImgWooCommerce + element.getCodigoConTipo() + "/";
             const arrayImgsSecundarias = element.getArrayImagenesSecundarias();
             const arrayTags = element.getArrayTags();
             
@@ -264,7 +265,7 @@ class ExportRemeras {
     // console.log($arrayProductos);
     // console.log($arrayProductos[0].getArrayImagenes());
     const tableContainer = document.getElementById("mainContent-main");
-    tableContainer.appendChild(ExportRemeras.createExportTable($arrayProductos,"http://qualityserver.ddns.net:50001/img_tienda/ftp_re/"));
+    tableContainer.appendChild(ExportRemeras.createExportTable($arrayProductos));
     // console.log(ExportRemeras.createExportTable($arrayProductos,"http://qualityserver.ddns.net:50001/img_tienda/ftp_re/"));
 
     console.log($arrayProductos[0].getLineaCsv());
