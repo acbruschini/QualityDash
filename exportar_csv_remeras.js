@@ -257,17 +257,19 @@ class ExportRemeras {
 
     static setProductosAExportarArray(arrayProductos,arrayProductosAExportar,querry){
         let idsAborrar = querry;
+        const deletePositions = [];
         idsAborrar.forEach(element => {
             if(element.checked) {
                 arrayProductosAExportar.push(arrayProductos[parseInt(element.name)]);
-
+                deletePositions.push(element.name);
             }
-         })
-         idsAborrar.forEach(element => {
-            if(element.checked) {
-                arrayProductos.splice(element.name,1);
-            }
-         })
+        })
+        console.log(deletePositions);
+        // RECORRO EL ARRAY DE ATRAS HACIA ADELANTE PARA PODER BORRAR SOBRE EL MISMO ARRAY QUE ITERO
+        for (let index = deletePositions.length -1; index >= 0; index--) {
+            console.log(deletePositions[index]);
+            arrayProductos.splice(deletePositions[index],1);
+        }
     }
 
     static updateTables(tableProductsContainer,tableProductsToExportContainer,arrayProducts,arrayProductsToExport){
@@ -293,12 +295,17 @@ ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProduct
 const $boton = document.getElementById("test");
 const $boton2 = document.getElementById("test2");
 
-
+console.log("ARRAY PRODUCTOS: ",arrayProductos);
+console.log("ARRAY PRODUCTOS A EXPORTAR: ",arrayProductosAExportar);
 
 $boton.onclick = () => {
     ExportRemeras.setProductosAExportarArray(arrayProductos,arrayProductosAExportar,document.querySelectorAll(`.${ExportRemeras.classNameChecked}`));
     ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
+    console.log("ARRAY PRODUCTOS: ",arrayProductos);
+    console.log("ARRAY PRODUCTOS A EXPORTAR: ",arrayProductosAExportar);
 }
 
 $boton2.onclick = () => {
+    ExportRemeras.setProductosAExportarArray(arrayProductosAExportar,arrayProductos,document.querySelectorAll(`.${ExportRemeras.classNameCheckedToExport}`));  // MANDO LOS DOS ARRAYS AL REVES
+    ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
 }
