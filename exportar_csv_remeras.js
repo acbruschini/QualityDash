@@ -61,37 +61,22 @@ class Producto {
 
     getCodigoConTipo () { 
         return this.getTipoDeProductoPrefijo() + "_" + this.codigo;
+        //return this.getTipoDeProductoPrefijo() + this.codigo;
+    }
+
+    static getArrayPositionById(arrayProductos,id){
+        let i = 0;
+        let retorno = false;
+        arrayProductos.forEach((e) => {
+            if(e.id == id) {
+                retorno = i;
+            }
+            i++
+        })
+        return retorno;
     }
 
 }
-
-// class Buzo extends Producto{
-    
-//     constructor(nombre,precio,descripcion,colorPrincipal,talle){
-//         super(nombre,precio,descripcion);
-//         if(this.esColorPrincipalValido(colorPrincipal)){
-//             this.colorPrincipal = colorPrincipal;
-//         }
-//         if(this.esTalleValido(talle)){
-//             this.talle = talle.toUpperCase();
-//         }
-//     }
-    
-//     toString () {
-//         return `Buzo ${this.nombre} ($${this.precio}) cuyo color principal es ${this.colorPrincipal}`;
-//     }
-    
-//     esColorPrincipalValido(color){
-//         const coloresPermitidos = ["Rojo","Negro","Azul","Blanco","Verde","Amarillo","Marron","Gris"];
-//         return coloresPermitidos.includes(color);
-//     }
-    
-//     esTalleValido(talle){
-//         const tallesPermitidos = ["S","M","L","XL","XXL"];
-//         return tallesPermitidos.includes(talle.toUpperCase());
-//     }
-    
-// }
 
 class Remera extends Producto{
     
@@ -100,7 +85,8 @@ class Remera extends Producto{
     static longitudCajaCms = 22;
     static anchoCajaCms = 30;
     static altoCajaCms = 2;
-    static direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/";
+    static direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/"; 
+    //static direccionImgWooCommerce = "https://www.qualityartworks.com.ar/wp-content/uploads/re/";
 
     constructor(id,codigo,seccion,nombre,precio,descripcion,colorPrincipal,tags,imagenPrincipal,imagenesSecundarias){
         super(id,codigo,seccion,nombre,precio,descripcion,tags);
@@ -121,7 +107,6 @@ class Remera extends Producto{
         let tempArray = [this.codigo+this.getTipoDeProductoPrefijo()+"_"+this.colorPrincipal.toLowerCase()+"_estampa.jpg"];
 
         Remera.coloresPermitidosRemeras.forEach(color => {
-            // color != this.colorPrincipal ? tempArray.push(color.toLowerCase()) : null;
             color != this.colorPrincipal ? tempArray.push(this.codigo+this.getTipoDeProductoPrefijo()+"_"+color.toLowerCase()+"_estampa.jpg") : null;
         })
 
@@ -131,6 +116,13 @@ class Remera extends Producto{
     getArrayImagenes() {
         const tempArray = [this.imagenPrincipal];
         return tempArray.concat(this.imagenesSecundarias.split("|"));
+    }
+
+    getArrayImagenesCompleto(){
+        const imagenesEstampaArray = this.getArrayImagenesEstampa();
+        imagenesEstampaArray.splice(0,1);
+        const imagenes = [this.imagenPrincipal,this.getArrayImagenesEstampa()[0],...this.getArrayImagenesSecundarias(),...imagenesEstampaArray];
+        return imagenes;
     }
 
     esColorPrincipalValido(color){
@@ -182,16 +174,11 @@ class Remera extends Producto{
         let separador = "|"
         let descripcionWooCommerce = "\"[block id=\"\"descripcion-remera\"\"]\"";
         let categoriaWooCommerce= "Remeras 100% Velvet Cotton|";
-        // let direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/";
-        
-        let imagenesEstampaArray = this.getArrayImagenesEstampa();
-        imagenesEstampaArray.splice(0,1);
-        let imagenes = [this.imagenPrincipal,this.getArrayImagenesEstampa()[0],...this.getArrayImagenesSecundarias(),...imagenesEstampaArray];
 
         let imagenesConcat = "";
         let i = 0;
-        console.log(imagenesEstampaArray);
-        imagenes.forEach(elemento => {         
+
+        this.getArrayImagenesCompleto().forEach(elemento => {         
             (i == 0) ? imagenesConcat += Remera.direccionImgWooCommerce+elemento : imagenesConcat += separador+Remera.direccionImgWooCommerce+elemento;
             i++;
         })
@@ -213,22 +200,23 @@ class ExportRemeras {
     static classNamePrice = "price";
     static classNameImages = "images";
     static classNameTags = "tags";
+    static classNameCheckbox = "checkbox";
 
     static createExportTable(arrayRemeras){
         let table = document.createElement("div");
         table.setAttribute("class",this.classNameTable);
-
+        let i=0;
         arrayRemeras.forEach(element => {
             let line = document.createElement("div");
             line.setAttribute("class",`${this.classNameTable}-${this.classNameLine}`);
 
             let direccionCompleta = Remera.direccionImgWooCommerce + element.getCodigoConTipo() + "/";
-            const arrayImgsSecundarias = element.getArrayImagenesSecundarias();
+            const imagenes = element.getArrayImagenesCompleto();
             const arrayTags = element.getArrayTags();
             
             line.innerHTML += `<p class="${this.classNameTable}-${this.classNameLine}--${this.classNameId}">${element.id}</p>`;
             line.innerHTML += `<div class="${this.classNameTable}-${this.classNameLine}--${this.classNameMainImg}">
-                                    <img src="${direccionCompleta}${element.imagenPrincipal}" alt="">
+                                    <img src="${direccionCompleta}${imagenes[0]}" alt="">
                                 </div>`
             line.innerHTML += `<p class="${this.classNameTable}-${this.classNameLine}--${this.classNameSku}">${element.codigo}</p>`;
             line.innerHTML += `<p class="${this.classNameTable}-${this.classNameLine}--${this.classNameTitle}">${element.nombre}</p>`;
@@ -238,7 +226,8 @@ class ExportRemeras {
             let divImg = document.createElement("div");
             divImg.setAttribute("class",`${this.classNameTable}-${this.classNameLine}--${this.classNameImages}`);
 
-            arrayImgsSecundarias.forEach(imgs => {
+            imagenes.splice(0,1);
+            imagenes.forEach(imgs => {
                 divImg.innerHTML += `<img src="${direccionCompleta}${imgs}" alt="">`;
             });
 
@@ -249,25 +238,70 @@ class ExportRemeras {
             });
 
             line.innerHTML += `<p class="${this.classNameTable}-${this.classNameLine}--${this.classNameTags}">${tagsConEspacio}</p>`;
+            // let input = document.createElement("input");
+            // input.setAttribute("class",`${this.classNameTable}-${this.classNameLine}--${this.classNameCheckbox}`);
+            // input.setAttribute("type","checkbox");
+            // line.appendChild(input);
+            line.innerHTML += `<div class="${this.classNameTable}-${this.classNameLine}--${this.classNameCheckbox} "><input class="productosSelector" type="checkbox" value="${element.id}" name="${i}" id="${element.id}"></div>`;
             table.appendChild(line);
+            i++;
         });
                
         return table;
     }
 
+    static setProductosAExportarArray(arrayProductos,arrayProductosAExportar,querry){
+        let idsAborrar = querry;
+        let i=0;
+        idsAborrar.forEach(element => {
+            if(element.checked) {
+                arrayProductosAExportar.push(arrayProductos[parseInt(element.name)]);
+                arrayProductos.splice(element.name,1);
+            }
+            i++;
+         })
+
+    }
 }
 
+const $arrayProductos = Remera.arrayDeObjetosRemeras(importJSON);
+const tableContainer = document.getElementById("mainContent-main");
+let tablaProductos = ExportRemeras.createExportTable($arrayProductos);
+tableContainer.appendChild(tablaProductos);
 
-    // console.log(importJSON);
-    const $arrayProductos = Remera.arrayDeObjetosRemeras(importJSON);
-    //const $arrayProductosAExportar = new Array();
-    
-    // console.log($arrayProductos);
-    // console.log($arrayProductos[0].getArrayImagenes());
-    const tableContainer = document.getElementById("mainContent-main");
-    tableContainer.appendChild(ExportRemeras.createExportTable($arrayProductos));
-    // console.log(ExportRemeras.createExportTable($arrayProductos,"http://qualityserver.ddns.net:50001/img_tienda/ftp_re/"));
+// console.log($arrayProductos[0].getLineaCsv());
+// console.log($arrayProductos[0].getArrayImagenesEstampa());
+// console.log($arrayProductos[0].getArrayImagenes());
 
-    console.log($arrayProductos[0].getLineaCsv());
-    console.log($arrayProductos[0].getArrayImagenesEstampa());
-    console.log($arrayProductos[0].getArrayImagenes());
+let boton = document.getElementById("test");
+
+const arrayProductosAExportar = [];
+
+Toastify({
+    text: "Desafio: Chequear que productos se quieren exportar,\ny luego cliquear en el logo de QUALITY (aun no hice completo el diseno)",
+    duration: 3000,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: "center", // `left`, `center` or `right`
+    stopOnFocus: true // Prevents dismissing of toast on hover
+}).showToast();
+
+
+boton.onclick = () => {
+
+    ExportRemeras.setProductosAExportarArray($arrayProductos,arrayProductosAExportar,document.querySelectorAll(".productosSelector"));
+    console.log("ARRAY DE PRODUCTOS A EXPORTAR: ",arrayProductosAExportar);
+    console.log("ARRAY DE PRODUCTOS SIN LOS QUE SE EXPORTAN: ",$arrayProductos);
+    tableContainer.removeChild(tablaProductos);
+    tablaProductos = ExportRemeras.createExportTable($arrayProductos);
+    tableContainer.appendChild(tablaProductos);
+    Toastify({
+        text: "Chequear Consola.\n Va a aparecer el array con los productos elejidos listo para exportar, y el array original de los productos SIN los que se pasaron al array de exportar",
+        duration: 3000,
+        close: true,
+        gravity: "bottom", // `top` or `bottom`
+        position: "left", // `left`, `center` or `right`
+        stopOnFocus: true // Prevents dismissing of toast on hover
+    }).showToast();
+
+}

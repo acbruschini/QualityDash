@@ -117,14 +117,13 @@
                 @mixin productLine-Cell($gridArea) {
                     padding: 1rem;
                     grid-area: $gridArea;
-                    // border: 0.1rem solid black;
+                    border: 0.1rem solid black;
                 }
                 
                 display: grid;
-                // grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px;
-                grid-template-columns: 0.25fr auto 0.25fr 1fr 1fr 0.25fr 1fr 1fr;
+                grid-template-columns: 0.25fr auto 0.25fr 1fr 1fr 0.25fr 1fr 1fr 0.25fr;
                 grid-template-areas: 
-                "id mainImg sku title description price images tags";
+                "id mainImg sku title description price images tags checkbox";
                 
                 &--id {
                     @include productLine-Cell(id);
@@ -157,6 +156,11 @@
                 &--tags {
                     @include productLine-Cell(tags);
                 }
+                &--checkbox {
+                    @include productLine-Cell(checkbox);
+                    text-align: center;
+                }
+
             }
         }
 
