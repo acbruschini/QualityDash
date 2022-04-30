@@ -14,7 +14,6 @@ const importJSON =
 
 // ENTIDADES
 
-
 class Producto {
     
     constructor(id,codigo,seccion,nombre,precio,descripcion,tags)
@@ -202,9 +201,19 @@ class ExportRemeras {
     static classNameTags = "tags";
     static classNameCheckbox = "checkbox";
 
-    static createExportTable(arrayRemeras){
-        let table = document.createElement("div");
-        table.setAttribute("class",this.classNameTable);
+    static classNameChecked = "producto";
+    static classNameCheckedToExport = "productoAExportar";
+
+    static createExportTable(arrayRemeras,checkedSelectorName){  
+        if(arrayRemeras == null || arrayRemeras.length == 0)
+        {
+            let $message = document.createElement("h3");
+            $message.innerText = "No existen productos para mostrar.";
+            console.log($message);
+            return $message;
+        }
+        let $table = document.createElement("div");
+        $table.setAttribute("class",this.classNameTable);
         let i=0;
         arrayRemeras.forEach(element => {
             let line = document.createElement("div");
@@ -238,70 +247,58 @@ class ExportRemeras {
             });
 
             line.innerHTML += `<p class="${this.classNameTable}-${this.classNameLine}--${this.classNameTags}">${tagsConEspacio}</p>`;
-            // let input = document.createElement("input");
-            // input.setAttribute("class",`${this.classNameTable}-${this.classNameLine}--${this.classNameCheckbox}`);
-            // input.setAttribute("type","checkbox");
-            // line.appendChild(input);
-            line.innerHTML += `<div class="${this.classNameTable}-${this.classNameLine}--${this.classNameCheckbox} "><input class="productosSelector" type="checkbox" value="${element.id}" name="${i}" id="${element.id}"></div>`;
-            table.appendChild(line);
+            line.innerHTML += `<div class="${this.classNameTable}-${this.classNameLine}--${this.classNameCheckbox} "><input class="${checkedSelectorName}" type="checkbox" value="${element.id}" name="${i}" id="${element.id}"></div>`;
+            $table.appendChild(line);
             i++;
         });
                
-        return table;
+        return $table;
     }
 
     static setProductosAExportarArray(arrayProductos,arrayProductosAExportar,querry){
         let idsAborrar = querry;
-        let i=0;
         idsAborrar.forEach(element => {
             if(element.checked) {
                 arrayProductosAExportar.push(arrayProductos[parseInt(element.name)]);
+
+            }
+         })
+         idsAborrar.forEach(element => {
+            if(element.checked) {
                 arrayProductos.splice(element.name,1);
             }
-            i++;
          })
+    }
 
+    static updateTables(tableProductsContainer,tableProductsToExportContainer,arrayProducts,arrayProductsToExport){
+        while (tableProductsContainer.firstChild) {
+            tableProductsContainer.removeChild(tableProductsContainer.firstChild);
+        }
+        while (tableProductsToExportContainer.firstChild) {
+            tableProductsToExportContainer.removeChild(tableProductsToExportContainer.firstChild);
+        }
+        tableProductsContainer.appendChild(ExportRemeras.createExportTable(arrayProducts,ExportRemeras.classNameChecked));
+        tableProductsToExportContainer.appendChild(ExportRemeras.createExportTable(arrayProductsToExport,ExportRemeras.classNameCheckedToExport));
     }
 }
 
-const $arrayProductos = Remera.arrayDeObjetosRemeras(importJSON);
-const tableContainer = document.getElementById("mainContent-main");
-let tablaProductos = ExportRemeras.createExportTable($arrayProductos);
-tableContainer.appendChild(tablaProductos);
+const arrayProductosAExportar = []; // ARRAY DONDE VAN LOS PRODUCTOS PARA EXPORTARSE
+const arrayProductos = Remera.arrayDeObjetosRemeras(importJSON); // ARRAY DE PRODUCTOS
 
-// console.log($arrayProductos[0].getLineaCsv());
-// console.log($arrayProductos[0].getArrayImagenesEstampa());
-// console.log($arrayProductos[0].getArrayImagenes());
-
-let boton = document.getElementById("test");
-
-const arrayProductosAExportar = [];
-
-Toastify({
-    text: "Desafio: Chequear que productos se quieren exportar,\ny luego cliquear en el logo de QUALITY (aun no hice completo el diseno)",
-    duration: 3000,
-    close: true,
-    gravity: "top", // `top` or `bottom`
-    position: "center", // `left`, `center` or `right`
-    stopOnFocus: true // Prevents dismissing of toast on hover
-}).showToast();
+const $tableProductosAExportar = document.getElementById("mainContent-main-productsToExport-table");
+const $tableContainer = document.getElementById("mainContent-main-products-table");
+ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
 
 
-boton.onclick = () => {
+const $boton = document.getElementById("test");
+const $boton2 = document.getElementById("test2");
 
-    ExportRemeras.setProductosAExportarArray($arrayProductos,arrayProductosAExportar,document.querySelectorAll(".productosSelector"));
-    console.log("ARRAY DE PRODUCTOS A EXPORTAR: ",arrayProductosAExportar);
-    console.log("ARRAY DE PRODUCTOS SIN LOS QUE SE EXPORTAN: ",$arrayProductos);
-    tableContainer.removeChild(tablaProductos);
-    tablaProductos = ExportRemeras.createExportTable($arrayProductos);
-    tableContainer.appendChild(tablaProductos);
-    Toastify({
-        text: "Chequear Consola.\n Va a aparecer el array con los productos elejidos listo para exportar, y el array original de los productos SIN los que se pasaron al array de exportar",
-        duration: 3000,
-        close: true,
-        gravity: "bottom", // `top` or `bottom`
-        position: "left", // `left`, `center` or `right`
-        stopOnFocus: true // Prevents dismissing of toast on hover
-    }).showToast();
 
+
+$boton.onclick = () => {
+    ExportRemeras.setProductosAExportarArray(arrayProductos,arrayProductosAExportar,document.querySelectorAll(`.${ExportRemeras.classNameChecked}`));
+    ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
+}
+
+$boton2.onclick = () => {
 }
