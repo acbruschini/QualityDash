@@ -114,6 +114,19 @@ li {
   border-radius: 1rem;
   padding: 3rem;
 }
+.mainContent-main-productsMain {
+  display: flex;
+  flex-direction: column;
+}
+.mainContent-main-productsMain-buttons {
+  display: flex;
+  margin-left: auto;
+}
+.mainContent-main-productsTable {
+  height: 30vh;
+  overflow: auto;
+  margin-bottom: 3rem;
+}
 .mainContent-main-productsTable-productLine {
   display: grid;
   grid-template-columns: 0.25fr auto 0.25fr 1fr 1fr 0.25fr 1fr 1fr 0.25fr;
@@ -122,13 +135,11 @@ li {
 .mainContent-main-productsTable-productLine--id {
   padding: 1rem;
   grid-area: id;
-  border: 0.1rem solid black;
   text-align: center;
 }
 .mainContent-main-productsTable-productLine--mainImg {
   padding: 1rem;
   grid-area: mainImg;
-  border: 0.1rem solid black;
 }
 .mainContent-main-productsTable-productLine--mainImg > img {
   width: 10rem;
@@ -136,27 +147,22 @@ li {
 .mainContent-main-productsTable-productLine--sku {
   padding: 1rem;
   grid-area: sku;
-  border: 0.1rem solid black;
 }
 .mainContent-main-productsTable-productLine--title {
   padding: 1rem;
   grid-area: title;
-  border: 0.1rem solid black;
 }
 .mainContent-main-productsTable-productLine--description {
   padding: 1rem;
   grid-area: description;
-  border: 0.1rem solid black;
 }
 .mainContent-main-productsTable-productLine--price {
   padding: 1rem;
   grid-area: price;
-  border: 0.1rem solid black;
 }
 .mainContent-main-productsTable-productLine--images {
   padding: 1rem;
   grid-area: images;
-  border: 0.1rem solid black;
 }
 .mainContent-main-productsTable-productLine--images > img {
   width: 5rem;
@@ -164,13 +170,26 @@ li {
 .mainContent-main-productsTable-productLine--tags {
   padding: 1rem;
   grid-area: tags;
-  border: 0.1rem solid black;
 }
 .mainContent-main-productsTable-productLine--checkbox {
   padding: 1rem;
   grid-area: checkbox;
-  border: 0.1rem solid black;
   text-align: center;
+}
+.mainContent-main--productsTitle {
+  padding-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.button1 {
+  padding: 0.8rem;
+  background-color: #d9d9d9;
+  border: 1px solid #bfbfbf;
+  font-size: 1rem;
+  color: #0d0d0d;
+}
+.button1:hover {
+  background-color: #bfbfbf;
 }
 
 .footer {

@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <script src="https://kit.fontawesome.com/32fb7f0663.js" crossorigin="anonymous"></script>
-    <title>Quality Artworks - Dashboard
-    </title>
+    <title>Quality Artworks - Dashboard</title>
 </head>
+
 <body>
     <div class="mainContainer">
         <nav class="navbar">
             <div class="navbar-branding">
-                <img id="test" src="./img/logo_quality.svg" alt="">
+                <img src="./img/logo_quality.svg" alt="" />
             </div>
             <div class="navbar-artworks navbar-sections">
                 <h2 id="test2">Cuadros</h2>
                 <ul>
-                    <li>Sumario</li>
+                    <li id="test3">Sumario</li>
                     <li>Pedidos</li>
                     <li>Ver Tabla en DB</li>
                     <li>Exportar CSV</li>
@@ -31,7 +33,6 @@
             </div>
             <div class="navbar-separator"></div>
             <div class="navbar-clothes navbar-sections">
-                
                 <h2>Remeras</h2>
                 <ul>
                     <li>Clothes item 1</li>
@@ -54,15 +55,460 @@
                 <h2 class="mainContent-header-section">Remeras |</h2>
                 <h2 class="mainContent-header-title">Exportar CSV</h2>
                 <div class="mainContent-header-user">
-                    <img class= "mainContent-header-user--img" src="./img/user.jpg" alt="User">
+                    <img class="mainContent-header-user--img" src="./img/user.jpg" alt="User" />
                     <p class="mainContent-header-user--username">Ariel</p>
                 </div>
             </div>
             <div class="mainContent-main" id="mainContent-main">
-                <h3 class="mainContent-main-products">Productos disponibles</h3>
-                <div id="mainContent-main-products-table"></div>
-                <h3 class="mainContent-main-products">Productos listos para exportar</h3>
-                <div id="mainContent-main-productsToExport-table"></div>
+                <div class="mainContent-main-productsMain">
+                    <h3 class="mainContent-main--productsTitle">> Seleccione Productos disponibles</h3>
+                    <div id="containerProductsTable">
+                        <!-- <div class="mainContent-main-productsTable">
+                            <div class="mainContent-main-productsTable-productLine">
+                                <p class="mainContent-main-productsTable-productLine--id">12</p>
+                                <div class="mainContent-main-productsTable-productLine--mainImg">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_negro_producto.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--sku">
+                                    0004
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--title">
+                                    Alf - En forma de fichas
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--description">
+                                    Espectacular remera estampada del personaje
+                                    <strong>Alf</strong> de la exitosa serie de los 80 que lleva
+                                    el mismo nombre. En su espalda lleva el
+                                    <strong>logo de la serie</strong>, también estampado.<br />Todas
+                                    nuestras remeras son de suave algodón Velvet Cotton 24/1 de
+                                    primera calidad y se encuentran estampadas con vinilos
+                                    termotransferibles importados que perduran en el tiempo y son
+                                    resistentes a los lavados.
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--price">
+                                    1890
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--images">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_negro_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_negro_hombre.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_negro_mujer.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_rojo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_azul_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_blanco_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_verde_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_amarillo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_marron_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0004/0004re_gris_estampa.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--tags">
+                                    willie tanner melmac alf fichas simpsons milhouse
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--checkbox">
+                                    <input class="producto" type="checkbox" value="12" name="0" id="12" />
+                                </div>
+                            </div>
+                            <div class="mainContent-main-productsTable-productLine">
+                                <p class="mainContent-main-productsTable-productLine--id">13</p>
+                                <div class="mainContent-main-productsTable-productLine--mainImg">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_blanco_producto.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--sku">
+                                    0005
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--title">
+                                    Amelie - Personaje
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--description">
+                                    Espectacular remera estampada del personaje
+                                    <strong>Amelie</strong> de la exitosa película francesa del
+                                    mismo nombre. En su espalda lleva el
+                                    <strong>logo del film</strong>, también estampado.<br />Todas
+                                    nuestras remeras son de suave algodón Velvet Cotton 24/1 de
+                                    primera calidad y se encuentran estampadas con vinilos
+                                    termotransferibles importados que perduran en el tiempo y son
+                                    resistentes a los lavados.
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--price">
+                                    1890
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--images">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_blanco_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_blanco_hombre.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_blanco_mujer.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_rojo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_negro_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_azul_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_verde_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_amarillo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_marron_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0005/0005re_gris_estampa.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--tags">
+                                    amelie poulain paris audrey tautou
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--checkbox">
+                                    <input class="producto" type="checkbox" value="13" name="1" id="13" />
+                                </div>
+                            </div>
+                            <div class="mainContent-main-productsTable-productLine">
+                                <p class="mainContent-main-productsTable-productLine--id">14</p>
+                                <div class="mainContent-main-productsTable-productLine--mainImg">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_blanco_producto.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--sku">
+                                    0006
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--title">
+                                    Anteojos 3 dimensiones
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--description">
+                                    Espectacular remera estampada con el gráfico de los clásicos
+                                    <strong>anteojos 3d</strong> de nuestra tierna infancia.
+                                    <br />Todas nuestras remeras son de suave algodón Velvet
+                                    Cotton 24/1 de primera calidad y se encuentran estampadas con
+                                    vinilos termotransferibles importados que perduran en el
+                                    tiempo y son resistentes a los lavados.
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--price">
+                                    1890
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--images">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_blanco_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_blanco_hombre.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_blanco_mujer.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_rojo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_negro_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_azul_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_verde_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_amarillo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_marron_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0006/0006re_gris_estampa.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--tags">
+                                    lentes gafas rojo cyan tres
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--checkbox">
+                                    <input class="producto" type="checkbox" value="14" name="2" id="14" />
+                                </div>
+                            </div>
+                            <div class="mainContent-main-productsTable-productLine">
+                                <p class="mainContent-main-productsTable-productLine--id">48</p>
+                                <div class="mainContent-main-productsTable-productLine--mainImg">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_amarillo_producto.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--sku">
+                                    0048
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--title">
+                                    Bob Esponja - Face
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--description">
+                                    Espectacular remera estampada del personaje
+                                    <strong>Bob Esponja</strong> de la serie animada infantil del
+                                    mismo nombre.<br />
+                                    En su espalda lleva el <strong>logo de la serie</strong>,
+                                    también estampado.<br />Todas nuestras remeras son de suave
+                                    algodón Velvet Cotton 24/1 de primera calidad y se encuentran
+                                    estampadas con vinilos termotransferibles importados que
+                                    perduran en el tiempo y son resistentes a los lavados.
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--price">
+                                    1890
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--images">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_amarillo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_amarillo_hombre.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_amarillo_mujer.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_rojo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_negro_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_azul_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_blanco_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_verde_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_marron_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0048/0048re_gris_estampa.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--tags">
+                                    sponge bob square pant bob esponja
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--checkbox">
+                                    <input class="producto" type="checkbox" value="48" name="3" id="48" />
+                                </div>
+                            </div>
+                            <div class="mainContent-main-productsTable-productLine">
+                                <p class="mainContent-main-productsTable-productLine--id">
+                                    964
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--mainImg">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_negro_producto.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--sku">
+                                    0964
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--title">
+                                    Sabrina - Spellman Mortuary
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--description">
+                                    Espectacular remera estampada la serie
+                                    <strong>Chilling Adventures of Sabrina</strong> basada en los
+                                    comics del mismo nombre.<br />Todas nuestras remeras son de
+                                    suave algodón Velvet Cotton 24/1 de primera calidad y se
+                                    encuentran estampadas con vinilos termotransferibles
+                                    importados que perduran en el tiempo y son resistentes a los
+                                    lavados.
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--price">
+                                    1890
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--images">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_negro_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_negro_hombre.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_negro_mujer.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_rojo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_azul_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_blanco_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_verde_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_amarillo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_marron_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0964/0964re_gris_estampa.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--tags">
+                                    salem spellman baxter
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--checkbox">
+                                    <input class="producto" type="checkbox" value="964" name="4" id="964" />
+                                </div>
+                            </div>
+                            <div class="mainContent-main-productsTable-productLine">
+                                <p class="mainContent-main-productsTable-productLine--id">
+                                    953
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--mainImg">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_negro_producto.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--sku">
+                                    0953
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--title">
+                                    Star Wars - Return of the Jedi
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--description">
+                                    Espectacular remera estampada de la saga de películas
+                                    <strong>Star Wars</strong>.<br />Todas nuestras remeras son de
+                                    suave algodón Velvet Cotton 24/1 de primera calidad y se
+                                    encuentran estampadas con vinilos termotransferibles
+                                    importados que perduran en el tiempo y son resistentes a los
+                                    lavados.
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--price">
+                                    1890
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--images">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_negro_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_negro_hombre.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_negro_mujer.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_rojo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_azul_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_blanco_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_verde_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_amarillo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_marron_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0953/0953re_gris_estampa.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--tags">
+                                    star wars guerra galaxias george rey rogue bb8 force awakens
+                                    lucas imperio darth vader r2d2 c3po anakin leia boba fett han
+                                    solo sith yoda jedi order stormtrooper death star luke
+                                    skywalker
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--checkbox">
+                                    <input class="producto" type="checkbox" value="953" name="5" id="953" />
+                                </div>
+                            </div>
+                            <div class="mainContent-main-productsTable-productLine">
+                                <p class="mainContent-main-productsTable-productLine--id">46</p>
+                                <div class="mainContent-main-productsTable-productLine--mainImg">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_rojo_producto.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--sku">
+                                    0046
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--title">
+                                    Los Autos Locos - Pier Nodoyuna &amp; Patan
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--description">
+                                    Espectacular remera estampada de
+                                    <strong>Pier Nodoyuna y Patán</strong> dos de los personajes
+                                    más representativos de la serie infantil
+                                    <strong>Wacky Races - Los Autos Locos</strong>.<br />Todas
+                                    nuestras remeras son de suave algodón Velvet Cotton 24/1 de
+                                    primera calidad y se encuentran estampadas con vinilos
+                                    termotransferibles importados que perduran en el tiempo y son
+                                    resistentes a los lavados.
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--price">
+                                    1890
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--images">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_rojo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_rojo_hombre.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_rojo_mujer.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_negro_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_azul_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_blanco_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_verde_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_amarillo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_marron_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0046/0046re_gris_estampa.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--tags">
+                                    wacky races pier autos locos cartoon network
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--checkbox">
+                                    <input class="producto" type="checkbox" value="46" name="6" id="46" />
+                                </div>
+                            </div>
+                            <div class="mainContent-main-productsTable-productLine">
+                                <p class="mainContent-main-productsTable-productLine--id">47</p>
+                                <div class="mainContent-main-productsTable-productLine--mainImg">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_amarillo_producto.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--sku">
+                                    0047
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--title">
+                                    Anatomy of a murder
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--description">
+                                    Espectacular remera estampada de
+                                    <strong>Anatomy of a murder</strong> cuyos títulos fueron
+                                    realizados por el diseñador
+                                    <strong>Saul Bass</strong>.<br />Todas nuestras remeras son de
+                                    suave algodón Velvet Cotton 24/1 de primera calidad y se
+                                    encuentran estampadas con vinilos termotransferibles
+                                    importados que perduran en el tiempo y son resistentes a los
+                                    lavados.
+                                </p>
+                                <p class="mainContent-main-productsTable-productLine--price">
+                                    1890
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--images">
+                                    <img src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_amarillo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_amarillo_hombre.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_amarillo_mujer.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_rojo_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_negro_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_azul_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_blanco_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_verde_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_marron_estampa.jpg"
+                                        alt="" /><img
+                                        src="http://qualityserver.ddns.net:50001/img_tienda/ftp_re/re_0047/0047re_gris_estampa.jpg"
+                                        alt="" />
+                                </div>
+                                <p class="mainContent-main-productsTable-productLine--tags">
+                                    saul bass anatomy murder design graphic diseño
+                                </p>
+                                <div class="mainContent-main-productsTable-productLine--checkbox">
+                                    <input class="producto" type="checkbox" value="47" name="7" id="47" />
+                                </div>
+                            </div>
+                        </div> -->
+                        
+                    </div>
+                    <div class="mainContent-main-productsMain-buttons">
+                        <button  id="test" class="mainContent-main--productsButton button1">Agregar productos para exportar</button>
+                    </div>
+                </div>
+                <h3 class="mainContent-main--productsTitle">
+                    Productos listos para exportar
+                </h3>
+                <div id="containerProductsToExportTable"></div>
             </div>
         </main>
         <footer class="footer">
@@ -72,4 +518,5 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./exportar_csv_remeras.js"></script>
 </body>
+
 </html>

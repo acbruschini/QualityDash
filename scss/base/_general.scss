@@ -110,14 +110,29 @@
         background-color: white;
         border-radius: 1rem;
         padding: 3rem;
+
+        &-productsMain {
+            display: flex;
+            flex-direction: column;
+
+            &-buttons {
+                display: flex;
+                margin-left: auto;
+            }
+        }
+        
         &-productsTable {
+            height: 30vh;
+            overflow: auto;
+            margin-bottom: 3rem;
+            //background-color: map-get(v.$mainColors, gray2);
 
             &-productLine {
 
                 @mixin productLine-Cell($gridArea) {
                     padding: 1rem;
                     grid-area: $gridArea;
-                    border: 0.1rem solid black;
+                    // border: 0.1rem solid black;
                 }
                 
                 display: grid;
@@ -164,7 +179,24 @@
             }
         }
 
+        &--productsTitle {
+            padding-bottom: 2rem;
+            font-size: 1.5rem;
+        }
     }
+}
+
+.button1 {
+    padding: 0.8rem;
+    background-color: map-get(v.$mainColors, gray1);
+    border: 1px solid map-get(v.$mainColors, gray2);
+    font-size: 1rem;
+    color: map-get(v.$mainColors, gray8);
+
+    &:hover {
+        background-color: map-get(v.$mainColors, gray2);
+    }
+
 }
 
 .footer {

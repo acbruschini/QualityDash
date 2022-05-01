@@ -287,13 +287,14 @@ class ExportRemeras {
 const arrayProductosAExportar = []; // ARRAY DONDE VAN LOS PRODUCTOS PARA EXPORTARSE
 const arrayProductos = Remera.arrayDeObjetosRemeras(importJSON); // ARRAY DE PRODUCTOS
 
-const $tableProductosAExportar = document.getElementById("mainContent-main-productsToExport-table");
-const $tableContainer = document.getElementById("mainContent-main-products-table");
+const $tableProductosAExportar = document.getElementById("containerProductsToExportTable");
+const $tableContainer = document.getElementById("containerProductsTable");
 ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
 
 
 const $boton = document.getElementById("test");
 const $boton2 = document.getElementById("test2");
+const $boton3 = document.getElementById("test3");
 
 console.log("ARRAY PRODUCTOS: ",arrayProductos);
 console.log("ARRAY PRODUCTOS A EXPORTAR: ",arrayProductosAExportar);
@@ -301,11 +302,25 @@ console.log("ARRAY PRODUCTOS A EXPORTAR: ",arrayProductosAExportar);
 $boton.onclick = () => {
     ExportRemeras.setProductosAExportarArray(arrayProductos,arrayProductosAExportar,document.querySelectorAll(`.${ExportRemeras.classNameChecked}`));
     ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
-    console.log("ARRAY PRODUCTOS: ",arrayProductos);
-    console.log("ARRAY PRODUCTOS A EXPORTAR: ",arrayProductosAExportar);
 }
 
 $boton2.onclick = () => {
     ExportRemeras.setProductosAExportarArray(arrayProductosAExportar,arrayProductos,document.querySelectorAll(`.${ExportRemeras.classNameCheckedToExport}`));  // MANDO LOS DOS ARRAYS AL REVES
     ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
+}
+
+$boton3.onclick = () => {
+    let archivo = "";
+    arrayProductosAExportar.forEach(element => {
+        
+        archivo += element.getLineaCsv()+"\n";
+    })
+    console.log(archivo);
+    let hiddenElement = document.createElement('a');  
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(archivo);  
+    hiddenElement.target = '_blank';  
+      
+    //provide the name for the CSV file to be downloaded  
+    hiddenElement.download = 'Famous Personalities.csv';  
+    hiddenElement.click();  
 }
