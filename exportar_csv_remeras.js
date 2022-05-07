@@ -282,46 +282,41 @@ class ExportRemeras {
         tableProductsContainer.appendChild(ExportRemeras.createExportTable(arrayProducts,ExportRemeras.classNameChecked));
         tableProductsToExportContainer.appendChild(ExportRemeras.createExportTable(arrayProductsToExport,ExportRemeras.classNameCheckedToExport));
     }
+    
+    static renderView(arrayJson,arrayProductos){
 
-    static renderView(arrayJson){
-        const arrayProductosAExportar = []; // ARRAY DONDE VAN LOS PRODUCTOS PARA EXPORTARSE
-        const arrayProductos = Remera.arrayDeObjetosRemeras(arrayJson); // ARRAY DE PRODUCTOS
-       
-        const $tableProductosAExportar = document.getElementById("containerProductsToExportTable");
-        const $tableContainer = document.getElementById("containerProductsTable");
+        arrayProductos = Remera.arrayDeObjetosRemeras(arrayJson); // ARRAY DE PRODUCTOS
+
         ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
-        
-        
-        const $boton = document.getElementById("test");
-        const $boton2 = document.getElementById("test2");
-        const $boton3 = document.getElementById("test3");
-
-        
+ 
         $boton.onclick = () => {
             ExportRemeras.setProductosAExportarArray(arrayProductos,arrayProductosAExportar,document.querySelectorAll(`.${ExportRemeras.classNameChecked}`));
             ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
+            ExportRemeras.refreshUI();
         }
         
-        $boton2.onclick = () => {
+        $botonRemoveProducts.onclick = () => {
             ExportRemeras.setProductosAExportarArray(arrayProductosAExportar,arrayProductos,document.querySelectorAll(`.${ExportRemeras.classNameCheckedToExport}`));  // MANDO LOS DOS ARRAYS AL REVES
             ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
+            ExportRemeras.refreshUI();
         }
         
         $boton3.onclick = () => {
-            let archivo = "";
-            arrayProductosAExportar.forEach(element => {
-                
-                archivo += element.getLineaCsv()+"\n";
-            })
+            console.log($inputFileName.value);
+            if(ExportRemeras.isFileName($inputFileName.value)){
+                let content = ExportRemeras.getFullCsv(arrayProductosAExportar);   
+                ExportRemeras.exportProducts(content,$inputFileName.value);
+            } else {
+                console.log("fallo el file name")
+                $inputFileName.value = "Nombre de Archivo invalido";
+            }
 
-            let hiddenElement = document.createElement('a');  
-            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(archivo);  
-            hiddenElement.target = '_blank';  
-            
-            //provide the name for the CSV file to be downloaded  
-            hiddenElement.download = 'Famous Personalities.csv';  
-            hiddenElement.click();  
+
         }
+
+        ExportRemeras.refreshUI();
+
+
     }
 
     static async getData(){
@@ -331,13 +326,64 @@ class ExportRemeras {
                 throw { status: res.status, statusText: res.statusText };
             }
             let json = await res.json();
-            this.renderView(json);
+            ExportRemeras.renderView(json,arrayProductos);
         } catch (err) {
-            console.log("en el catch",err.status);
+            console.log("en el catch",err.status); // MANEJAR EL ERROR
         }
     }
 
+    static exportProducts(string,name){
+        let hiddenElement = document.createElement('a');  
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(string);  
+        hiddenElement.target = '_blank';  
+        
+        //provide the name for the CSV file to be downloaded  
+        hiddenElement.download = name;  
+        hiddenElement.click();  
+    }
 
+    static getFullCsv(arrayProductos){
+        let content = "";
+        arrayProductos.forEach(element => {               
+            content += element.getLineaCsv()+"\n";
+        })
+        return content;
+    }
+
+    static isFileName(string){
+        let rg1=/^[^\\/:\*\?"<>\|]+$/; // CARACTERES PROHIBIDOS \ / : * ? " < > |
+        let rg2=/^\./; // NO PUEDE EMPEZAR CON PUNTO (.)
+        let rg3=/^(nul|prn|con|lpt[0-9]|com[0-9])(\.|$)/i; // NOMBRE DE ARCHIVOS PROHIBIDOS
+        return rg1.test(string)&&!rg2.test(string)&&!rg3.test(string);
+    }
+
+    static refreshUI(){
+
+        if(arrayProductosAExportar == null || arrayProductosAExportar.length == 0){
+            $botonRemoveProducts.style.display = "none";
+            //console.log(window.getComputedStyle($divOptionsToExport).display);
+            $divOptionsToExport.style.display = "none";
+        }
+        else
+        {
+            $botonRemoveProducts.style.display = "block";
+            $divOptionsToExport.style.display = "flex";
+        }
+    }
 }
+
+const arrayProductosAExportar = []; // ARRAY DONDE VAN LOS PRODUCTOS PARA EXPORTARSE
+const arrayProductos = []; // ARRAY DONDE VAN LOS PRODUCTOS QUE SE PUEDEN EXPORTAR
+
+const $tableProductosAExportar = document.getElementById("containerProductsToExportTable");
+const $tableContainer = document.getElementById("containerProductsTable");
+const $divOptionsToExport = document.getElementById("divOptionsToExport");
+
+
+const $boton = document.getElementById("btn_addProducts");
+const $botonRemoveProducts = document.getElementById("btn_removeProducts");
+const $boton3 = document.getElementById("btn_exportProducts");
+const $inputFileName = document.getElementById("input_FileName");
+const $testboton = document.getElementById("test2");
 
 ExportRemeras.getData();

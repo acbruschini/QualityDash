@@ -120,9 +120,26 @@
                 margin-left: auto;
             }
         }
+
+        &-productsToExportMain {
+            display: flex;
+            flex-direction: column;
+
+            &-buttons {
+                display: flex;
+                margin-left: auto;
+            }
+        }
         
+        &-optionsToExport {
+            display: flex;
+            flex-direction: column;
+
+        }
+
         &-productsTable {
-            height: 30vh;
+            max-height: 30vh;
+            min-height: 10vh;
             overflow: auto;
             margin-bottom: 3rem;
             //background-color: map-get(v.$mainColors, gray2);

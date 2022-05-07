@@ -122,8 +122,21 @@ li {
   display: flex;
   margin-left: auto;
 }
+.mainContent-main-productsToExportMain {
+  display: flex;
+  flex-direction: column;
+}
+.mainContent-main-productsToExportMain-buttons {
+  display: flex;
+  margin-left: auto;
+}
+.mainContent-main-optionsToExport {
+  display: flex;
+  flex-direction: column;
+}
 .mainContent-main-productsTable {
-  height: 30vh;
+  max-height: 30vh;
+  min-height: 10vh;
   overflow: auto;
   margin-bottom: 3rem;
 }

@@ -502,13 +502,26 @@
                         
                     </div>
                     <div class="mainContent-main-productsMain-buttons">
-                        <button  id="test" class="mainContent-main--productsButton button1">Agregar productos para exportar</button>
+                        <button  id="btn_addProducts" class="mainContent-main--productsButton button1">Agregar productos para exportar</button>
                     </div>
                 </div>
-                <h3 class="mainContent-main--productsTitle">
-                    Productos listos para exportar
-                </h3>
-                <div id="containerProductsToExportTable"></div>
+                <div class="mainContent-main-productsToExportMain">
+                    <h3 class="mainContent-main--productsTitle">
+                        Productos listos para exportar
+                    </h3>
+                    <div id="containerProductsToExportTable"></div>
+                    <div class="mainContent-main-productsMain-buttons">
+                        <button  id="btn_removeProducts" class="mainContent-main--productsButton button1">Quitar productos para exportar</button>
+                    </div>
+                </div>
+                <div id="divOptionsToExport" class="mainContent-main-optionsToExport">
+                    <h3 class="mainContent-main--productsTitle">
+                        Opciones de Exportacion
+                    </h3>
+                    <label>Nombre de archivo</label>
+                    <input id="input_FileName" type="text">
+                    <button id="btn_exportProducts" class="button1">Exportar</button>    
+                </div>            
             </div>
         </main>
         <footer class="footer">
