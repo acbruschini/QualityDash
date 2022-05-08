@@ -107,6 +107,8 @@
     }
 
     &-main {
+        display: flex;
+        flex-direction: column;
         background-color: white;
         border-radius: 1rem;
         padding: 3rem;
@@ -132,8 +134,23 @@
         }
         
         &-optionsToExport {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr;
+            row-gap: 1rem;
+
+            &-longitudCaja, &-anchoCaja, &-altoCaja, &-pesoRemera, &-precio, &-direccionImagenes{
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            &-fileNameExport{
+                //grid-column: 1 / 4;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding-top: 2rem;                
+            }
 
         }
 
@@ -197,10 +214,21 @@
         }
 
         &--productsTitle {
+            display: flex;
+            align-items: center;
             padding-bottom: 2rem;
             font-size: 1.5rem;
         }
     }
+}
+
+.inputOptionsLabel {
+    font-size: 1.3rem;
+    color: black;
+}
+
+.input1 {
+    flex-grow: 1;
 }
 
 .button1 {
@@ -214,6 +242,20 @@
         background-color: map-get(v.$mainColors, gray2);
     }
 
+}
+
+.numberBullet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+    font-family: v.$defaultFont;
+    font-weight: 900;
 }
 
 .footer {

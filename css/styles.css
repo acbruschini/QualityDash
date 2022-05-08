@@ -110,6 +110,8 @@ li {
   font-size: 1.5rem;
 }
 .mainContent-main {
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border-radius: 1rem;
   padding: 3rem;
@@ -131,8 +133,20 @@ li {
   margin-left: auto;
 }
 .mainContent-main-optionsToExport {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1rem;
+}
+.mainContent-main-optionsToExport-longitudCaja, .mainContent-main-optionsToExport-anchoCaja, .mainContent-main-optionsToExport-altoCaja, .mainContent-main-optionsToExport-pesoRemera, .mainContent-main-optionsToExport-precio, .mainContent-main-optionsToExport-direccionImagenes {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.mainContent-main-optionsToExport-fileNameExport {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 2rem;
 }
 .mainContent-main-productsTable {
   max-height: 30vh;
@@ -190,8 +204,19 @@ li {
   text-align: center;
 }
 .mainContent-main--productsTitle {
+  display: flex;
+  align-items: center;
   padding-bottom: 2rem;
   font-size: 1.5rem;
+}
+
+.inputOptionsLabel {
+  font-size: 1.3rem;
+  color: black;
+}
+
+.input1 {
+  flex-grow: 1;
 }
 
 .button1 {
@@ -203,6 +228,20 @@ li {
 }
 .button1:hover {
   background-color: #bfbfbf;
+}
+
+.numberBullet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
 }
 
 .footer {
