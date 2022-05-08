@@ -24,11 +24,21 @@ class Producto {
         }
         this.id = parseInt(id);
         this.nombre = nombre;
-        this.precio = precio;
+        this.precio = Number(precio);
         this.descripcion = descripcion;
         this.tags = tags;
         this.codigo = codigo;
         this.seccion = seccion;
+    }
+
+    static isPrecio(value){
+        // VALIDO ESTO, PERO DESPUES VOY A AGREGAR MAS
+        let retorno = Number(value);
+        if(isNaN(retorno) || retorno == 0)
+        {
+            return false;
+        }
+        return retorno;
     }
     
     getArrayTags() {
@@ -169,6 +179,25 @@ class Remera extends Producto{
         return arrayReturn;
     }
 
+    static isPesoProducto(value){
+        // VALIDO ESTO, PERO DESPUES VOY A AGREGAR MAS
+        let retorno = Number(value);
+        if(isNaN(retorno) || retorno == 0)
+        {
+            return false;
+        }
+        return retorno;      
+    }
+    static isMedidaCaja(value){
+        // VALIDO ESTO, PERO DESPUES VOY A AGREGAR MAS
+        let retorno = Number(value);
+        if(isNaN(retorno) || retorno == 0)
+        {
+            return false;
+        }
+        return retorno;
+    }
+
     getLineaCsv (){
         let separador = "|"
         let descripcionWooCommerce = "\"[block id=\"\"descripcion-remera\"\"]\"";
@@ -183,6 +212,7 @@ class Remera extends Producto{
         })
 
         return `${this.id};${this.getTipoDeProductoPrefijo()};${this.getTipoDeProductoPrefijo() + this.codigo};${this.nombre};${descripcionWooCommerce};${this.descripcion};${categoriaWooCommerce+this.seccion};${this.precio};${imagenesConcat};${this.tags};${Remera.pesoProductoKg};${Remera.longitudCajaCms};${Remera.anchoCajaCms};${Remera.altoCajaCms}`;
+        //return `${this.id};${this.getTipoDeProductoPrefijo()};${this.getTipoDeProductoPrefijo() + this.codigo};${this.nombre};${descripcionWooCommerce};${this.descripcion};${categoriaWooCommerce+this.seccion};${this.precio};${imagenesConcat};${this.tags};${this.pesoProductoKg};${this.longitudCajaCms};${this.anchoCajaCms};${this.altoCajaCms}`;
     }
 
 }
@@ -304,6 +334,7 @@ class ExportRemeras {
         $boton3.onclick = () => {
             console.log($inputFileName.value);
             if(ExportRemeras.isFileName($inputFileName.value)){
+                ExportRemeras.updateExportProductsArray(arrayProductosAExportar);
                 let content = ExportRemeras.getFullCsv(arrayProductosAExportar);   
                 ExportRemeras.exportProducts(content,$inputFileName.value);
             } else {
@@ -314,6 +345,17 @@ class ExportRemeras {
 
         }
 
+        $testBoton.onclick = () => {
+            ExportRemeras.updateExportProductsArray(arrayProductosAExportar);
+
+        }
+
+        $inputImageAddressCheckbox.addEventListener("change", ExportRemeras.refreshOptionsInputs);
+        $inputWeightCheckbox.addEventListener("change", ExportRemeras.refreshOptionsInputs);
+        $inputBoxLenghtCheckbox.addEventListener("change", ExportRemeras.refreshOptionsInputs);
+        $inputBoxWidthCheckbox.addEventListener("change", ExportRemeras.refreshOptionsInputs);
+        $inputBoxHeightCheckbox.addEventListener("change", ExportRemeras.refreshOptionsInputs);
+        $inputOverwritePriceCheckbox.addEventListener("change", ExportRemeras.refreshOptionsInputs);
         ExportRemeras.refreshUI();
 
 
@@ -342,6 +384,30 @@ class ExportRemeras {
         hiddenElement.click();  
     }
 
+    static updateExportProductsArray(arrayProductosAExportar){
+
+        if(Remera.isPrecio($inputOverwritePrice.value) && $inputOverwritePriceCheckbox.checked){
+            arrayProductosAExportar.map(element => {
+                element.precio = Number($inputOverwritePrice.value);
+            });            
+        }
+        if(Remera.isPesoProducto($inputWeight.value) && $inputWeightCheckbox.checked){
+            Remera.pesoProductoKg = Number($inputWeight.value);
+        }
+        if(Remera.isMedidaCaja($inputBoxLenght.value) && $inputBoxLenghtCheckbox.checked){
+            Remera.longitudCajaCms = Number($inputBoxLenght.value);
+        }
+        if(Remera.isMedidaCaja($inputBoxWidth.value) && $inputBoxWidthCheckbox.checked){
+            Remera.anchoCajaCms = Number($inputBoxWidth.value);
+        }
+        if(Remera.isMedidaCaja($inputBoxHeight.value) && $inputBoxHeightCheckbox.checked){
+            Remera.altoCajaCms = Number($inputBoxHeight.value);            
+        }
+        if($inputImageAddress.value != '' && $inputImageAddressCheckbox.checked){
+            Remera.direccionImgWooCommerce = $inputImageAddress.value;
+        }
+    }
+
     static getFullCsv(arrayProductos){
         let content = "";
         arrayProductos.forEach(element => {               
@@ -357,7 +423,25 @@ class ExportRemeras {
         return rg1.test(string)&&!rg2.test(string)&&!rg3.test(string);
     }
 
+    static refreshOptionsInputs(){
+        $inputImageAddress.value = Remera.direccionImgWooCommerce;
+        $inputWeight.value = Remera.pesoProductoKg;
+        $inputBoxLenght.value = Remera.longitudCajaCms;
+        $inputBoxWidth.value = Remera.anchoCajaCms;
+        $inputBoxHeight.value = Remera.altoCajaCms;
+
+        ($inputImageAddressCheckbox.checked) ? $inputImageAddress.disabled = false : $inputImageAddress.disabled = true;
+        ($inputWeightCheckbox.checked) ? $inputWeight.disabled = false : $inputWeight.disabled = true;
+        ($inputBoxLenghtCheckbox.checked) ? $inputBoxLenght.disabled = false : $inputBoxLenght.disabled = true;
+        ($inputBoxWidthCheckbox.checked) ? $inputBoxWidth.disabled = false : $inputBoxWidth.disabled = true;
+        ($inputBoxHeightCheckbox.checked) ? $inputBoxHeight.disabled = false : $inputBoxHeight.disabled = true;
+        ($inputOverwritePriceCheckbox.checked) ? $inputOverwritePrice.disabled = false : $inputOverwritePrice.disabled = true;
+
+    }
+
     static refreshUI(){
+
+        ExportRemeras.refreshOptionsInputs();
 
         if(arrayProductosAExportar == null || arrayProductosAExportar.length == 0){
             $botonRemoveProducts.style.display = "none";
@@ -384,6 +468,21 @@ const $boton = document.getElementById("btn_addProducts");
 const $botonRemoveProducts = document.getElementById("btn_removeProducts");
 const $boton3 = document.getElementById("btn_exportProducts");
 const $inputFileName = document.getElementById("input_FileName");
-const $testboton = document.getElementById("test2");
+
+const $inputOverwritePrice = document.getElementById("input_OverwritePrice");
+const $inputOverwritePriceCheckbox = document.getElementById("input_OverwritePriceCheckbox");
+
+const $inputImageAddress = document.getElementById("input_ImageAddress");
+const $inputImageAddressCheckbox = document.getElementById("input_ImageAddressCheckbox");
+const $inputWeight = document.getElementById("input_Weight");
+const $inputWeightCheckbox = document.getElementById("input_WeightCheckbox");
+const $inputBoxLenght = document.getElementById("input_BoxLenght");
+const $inputBoxLenghtCheckbox = document.getElementById("input_BoxLenghtCheckbox");
+const $inputBoxWidth = document.getElementById("input_BoxWidth");
+const $inputBoxWidthCheckbox = document.getElementById("input_BoxWidthCheckbox");
+const $inputBoxHeight = document.getElementById("input_BoxHeight");
+const $inputBoxHeightCheckbox = document.getElementById("input_BoxHeightCheckbox");
+
+const $testBoton = document.getElementById("test2");
 
 ExportRemeras.getData();
