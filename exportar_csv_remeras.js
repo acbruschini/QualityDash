@@ -54,8 +54,8 @@ class Producto {
     }
 
     getCodigoConTipo () { 
-        return this.getTipoDeProductoPrefijo() + "_" + this.codigo;
-        //return this.getTipoDeProductoPrefijo() + this.codigo;
+        //return this.getTipoDeProductoPrefijo() + "_" + this.codigo;
+        return this.getTipoDeProductoPrefijo() + this.codigo;
     }
 
     static getArrayPositionById(arrayProductos,id){
@@ -79,8 +79,8 @@ class Remera extends Producto{
     static longitudCajaCms = 22;
     static anchoCajaCms = 30;
     static altoCajaCms = 2;
-    static direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/"; 
-    //static direccionImgWooCommerce = "https://www.qualityartworks.com.ar/wp-content/uploads/re/";
+    //static direccionImgWooCommerce = "http://qualityserver.ddns.net:50001/img_tienda/ftp_re/"; 
+    static direccionImgWooCommerce = "https://www.qualityartworks.com.ar/wp-content/uploads/re/";
 
     constructor(id,codigo,seccion,nombre,precio,descripcion,colorPrincipal,tags,imagenPrincipal,imagenesSecundarias){
         super(id,codigo,seccion,nombre,precio,descripcion,tags);
@@ -273,10 +273,12 @@ class ExportRemeras {
     static setProductosAExportarArray(arrayProductos,arrayProductosAExportar,querry){
         let idsAborrar = querry;
         const deletePositions = [];
+        let cantidad = 0;
         idsAborrar.forEach(element => {
             if(element.checked) {
                 arrayProductosAExportar.push(arrayProductos[parseInt(element.name)]);
                 deletePositions.push(element.name);
+                cantidad++;
             }
         })
         console.log(deletePositions);
@@ -285,6 +287,7 @@ class ExportRemeras {
             console.log(deletePositions[index]);
             arrayProductos.splice(deletePositions[index],1);
         }
+        return cantidad;
     }
 
     static updateTables(tableProductsContainer,tableProductsToExportContainer,arrayProducts,arrayProductsToExport){
@@ -305,15 +308,18 @@ class ExportRemeras {
         ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
  
         $boton.onclick = () => {
-            ExportRemeras.setProductosAExportarArray(arrayProductos,arrayProductosAExportar,document.querySelectorAll(`.${ExportRemeras.classNameChecked}`));
+            let cantidad = ExportRemeras.setProductosAExportarArray(arrayProductos,arrayProductosAExportar,document.querySelectorAll(`.${ExportRemeras.classNameChecked}`));
             ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
             ExportRemeras.refreshUI();
+            ExportRemeras.customAlert(`Se agregaron ${cantidad} productos para exportar`);
+            
         }
         
         $botonRemoveProducts.onclick = () => {
-            ExportRemeras.setProductosAExportarArray(arrayProductosAExportar,arrayProductos,document.querySelectorAll(`.${ExportRemeras.classNameCheckedToExport}`));  // MANDO LOS DOS ARRAYS AL REVES
+            let cantidad = ExportRemeras.setProductosAExportarArray(arrayProductosAExportar,arrayProductos,document.querySelectorAll(`.${ExportRemeras.classNameCheckedToExport}`));  // MANDO LOS DOS ARRAYS AL REVES
             ExportRemeras.updateTables($tableContainer,$tableProductosAExportar,arrayProductos,arrayProductosAExportar);
             ExportRemeras.refreshUI();
+            ExportRemeras.customAlert(`Se quitaron ${cantidad} productos para exportar`);
         }
         
         $boton3.onclick = () => {
@@ -322,16 +328,12 @@ class ExportRemeras {
                 ExportRemeras.updateExportProductsArray(arrayProductosAExportar);
                 let content = ExportRemeras.getFullCsv(arrayProductosAExportar);   
                 ExportRemeras.exportProducts(content,$inputFileName.value);
+                ExportRemeras.customAlert(`Se exportaron ${arrayProductosAExportar.length} productos exitosamente`);
             } else {
                 console.log("fallo el file name")
                 $inputFileName.value = "Nombre de Archivo invalido";
             }
 
-
-        }
-
-        $testBoton.onclick = () => {
-            ExportRemeras.updateExportProductsArray(arrayProductosAExportar);
 
         }
 
@@ -342,7 +344,6 @@ class ExportRemeras {
         $inputBoxHeightCheckbox.addEventListener("change", ExportRemeras.refreshOptionsInputs);
         $inputOverwritePriceCheckbox.addEventListener("change", ExportRemeras.refreshOptionsInputs);
         ExportRemeras.refreshUI();
-
 
     }
 
@@ -440,6 +441,24 @@ class ExportRemeras {
             $divOptionsToExport.style.display = "grid";
             $divProductsToExport.style.display = "flex";
         }
+    }
+
+    static customAlert(string) {
+        Toastify({
+            text: string,
+            duration: 3000,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "#000000",
+            },
+            offset: {
+               y: "4rem" // vertical axis - can be a number or a string indicating unity. eg: '2em'
+              },
+            onClick: function(){} // Callback after click
+          }).showToast();
     }
 }
 
